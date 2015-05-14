@@ -211,15 +211,15 @@ class CIU_Loader extends CI_Loader {
             elseif (!isset($CI->$classvar))
             {
                 //redesignme: check if we have got one already..
-                $CI->$classvar = new $name($config);
+                $CI->$classvar = new $name;
             }
         }
-        
+
         $this->_ci_classes[$class] = $classvar;
     }
-    
+
     // --------------------------------------------------------------------
-    
+
     /**
      * Autoloader
      *

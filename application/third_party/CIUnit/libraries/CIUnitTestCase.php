@@ -77,17 +77,19 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->CI =& get_instance();
+
         // Only run if the $tables attribute is set.
         if (!empty($this->tables)) {
             $this->dbfixt($this->tables);
         }
     }
-    
+
     /**
      * Tear Down
-     * 
+     *
      * This method will run after every test.
-     * 
+     *
      * @return void
      *
      * @author Eric Jones
@@ -169,9 +171,10 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
               // of the database load. Right??
               $table_fixtures = array_reverse($table_fixtures, true);
           }
-      
+
           // Iterate over the array unloading the tables
           foreach ($table_fixtures as $table => $fixture) {
+              $table = is_int($table) ? $fixture : $table;
               CIUnit::$fixture->unload($table);
               log_message('debug', 'Table fixture "' . $fixture . '" unloaded');
           }

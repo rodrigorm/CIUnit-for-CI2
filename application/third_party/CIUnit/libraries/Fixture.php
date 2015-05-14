@@ -28,10 +28,10 @@ class Fixture {
     function load($table, $fixt)
     {
         $this->_assign_db();
-		
+
         // $fixt is supposed to be an associative array
         // E.g. outputted by spyc from reading a YAML file
-        $this->CI->db->simple_query('truncate table ' . $table . ';');
+        $this->unload($table);
 
         foreach ( $fixt as $id => $row )
         {
@@ -52,20 +52,22 @@ class Fixture {
         log_message('debug',
             "Data fixture for db table '$table' loaded - $nbr_of_rows rows");
     }
-    
+
     public function unload($table)
     {
         $this->_assign_db();
-        
+
+        $this->CI->db->simple_query('set foreign_key_checks = 0;');
         $Q = $this->CI->db->simple_query('truncate table ' . $table . ';');
-        
+        $this->CI->db->simple_query('set foreign_key_checks = 1;');
+
         if (!$Q) {
             echo $this->CI->db->call_function('error', $this->CI->db->conn_id);
             echo "\n";
             echo "Failed to truncate the table ".$table."\n\n";
         }
     }
-    
+
 
     private function _assign_db()
     {

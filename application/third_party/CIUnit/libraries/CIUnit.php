@@ -119,7 +119,7 @@ class CIUnit {
             $old = &self::$controllers[$controller_name];
             self::$controller = &$old['address'];
             self::$current = $controller_name;
-            $loader->_ci_models = $old['models'];
+            //$loader->_ci_models = $old['models'];
             //$loader->_ci_components = $old['components'];
             //$loader->_ci_classes = &$old['classes'];
         }
